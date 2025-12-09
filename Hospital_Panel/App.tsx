@@ -83,9 +83,11 @@ export default function App() {
       {/* Sidebar */}
       <aside className={`${isSidebarOpen ? 'w-64' : 'w-20'} bg-[#0060c4] text-white transition-all duration-300 flex flex-col shadow-xl z-30`}>
         <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center text-[#0060c4] font-bold text-xl shadow-md">
-            M
-          </div>
+          <img 
+            src="\assets\image\Medidap_logo.png" 
+            alt="MedIDap Logo" 
+            className="w-8 h-8 rounded-lg object-cover"
+          />
           {isSidebarOpen && <span className="text-xl font-bold tracking-tight">MedIDap</span>}
         </div>
 
