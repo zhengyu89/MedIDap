@@ -84,7 +84,7 @@ export default function App() {
       <aside className={`${isSidebarOpen ? 'w-64' : 'w-20'} bg-[#0060c4] text-white transition-all duration-300 flex flex-col shadow-xl z-30`}>
         <div className="p-6 flex items-center gap-3">
           <img 
-            src="\Hospital_Panel\public\assets\image\Medidap_logo.png" 
+            src="/MedIDap/assets/image/Medidap_logo.png" 
             alt="MedIDap Logo" 
             className="w-8 h-8 rounded-lg object-cover"
           />
