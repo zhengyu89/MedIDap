@@ -1,0 +1,7 @@
+{
+  "name": "MedIDap Hospital Portal",
+  "description": "Hospital-side interface for scanning Medical IDs, OCR processing of medical documents, and FHIR standardization using Gemini AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
