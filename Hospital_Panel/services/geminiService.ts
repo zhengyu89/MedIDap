@@ -1,12 +1,24 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-// Initialize the client
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Lazy initialization
+let ai: GoogleGenAI | null = null;
+
+const getAiClient = () => {
+  if (!ai) {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error("API Key is missing. Please set VITE_GEMINI_API_KEY in your .env file.");
+      throw new Error("VITE_GEMINI_API_KEY is not set.");
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 export const analyzeMedicalDocument = async (base64Image: string): Promise<string> => {
   try {
     const model = "gemini-2.5-flash";
-    
+
     const prompt = `
       Analyze the provided medical document image. 
       Extract the following information and structure it into a valid FHIR R4 Bundle JSON format.
@@ -20,7 +32,7 @@ export const analyzeMedicalDocument = async (base64Image: string): Promise<strin
       IMPORTANT: Return ONLY the raw JSON string. Do not include markdown formatting like \`\`\`json.
     `;
 
-    const response = await ai.models.generateContent({
+    const response = await getAiClient().models.generateContent({
       model: model,
       contents: {
         parts: [
@@ -54,7 +66,7 @@ export const analyzeMedicalDocument = async (base64Image: string): Promise<strin
 export const analyzeMedicalText = async (medicalText: string): Promise<string> => {
   try {
     const model = "gemini-2.5-flash";
-    
+
     const prompt = `
       Analyze the provided medical text notes. 
       Extract the information and structure it into a valid FHIR R4 Bundle JSON format.
@@ -71,7 +83,7 @@ export const analyzeMedicalText = async (medicalText: string): Promise<string> =
       IMPORTANT: Return ONLY the raw JSON string. Do not include markdown formatting like \`\`\`json.
     `;
 
-    const response = await ai.models.generateContent({
+    const response = await getAiClient().models.generateContent({
       model: model,
       contents: prompt,
       config: {
@@ -91,22 +103,22 @@ export const analyzeMedicalText = async (medicalText: string): Promise<string> =
 };
 
 export const parseFHIRToUI = async (fhirJson: string) => {
-    // In a real app, we would parse the FHIR JSON to populate the UI.
-    // For this demo, we use Gemini to explain the FHIR back to the UI structure 
-    // to ensure the user understands what happened, or we simply rely on the UI 
-    // to display the raw JSON alongside a mock parsed result for the specific demo flow.
-    
-    // This function is a helper to generate a summary if needed.
-    const model = "gemini-2.5-flash";
-    const prompt = `
+  // In a real app, we would parse the FHIR JSON to populate the UI.
+  // For this demo, we use Gemini to explain the FHIR back to the UI structure 
+  // to ensure the user understands what happened, or we simply rely on the UI 
+  // to display the raw JSON alongside a mock parsed result for the specific demo flow.
+
+  // This function is a helper to generate a summary if needed.
+  const model = "gemini-2.5-flash";
+  const prompt = `
       Summarize the following FHIR JSON into a short clinical note string.
       JSON: ${fhirJson}
     `;
 
-    const response = await ai.models.generateContent({
-        model,
-        contents: prompt
-    });
-    
-    return response.text;
+  const response = await getAiClient().models.generateContent({
+    model,
+    contents: prompt
+  });
+
+  return response.text;
 }
