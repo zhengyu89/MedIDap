@@ -26,6 +26,7 @@ export interface PatientProfile {
   allergies: string[];
   chronicDiseases: { name: string; since: string }[];
   medications: { name: string; dosage: string; frequency: string }[];
+  image?: string;
 }
 
 export enum AppView {

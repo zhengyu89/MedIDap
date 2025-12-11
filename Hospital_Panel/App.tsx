@@ -1,0 +1,348 @@
+import React, { useState } from 'react';
+import { LayoutDashboard, Users, ScanLine, Settings, Bell, Search, Menu, QrCode, Smartphone } from 'lucide-react';
+import { PatientRecord } from './components/PatientRecord';
+import { OCRProcessor } from './components/OCRProcessor';
+import { AppView, MedicalRecord, PatientProfile } from './types';
+
+// Mock Initial Data
+const INITIAL_PATIENT: PatientProfile = {
+  name: "Jana Binti Yasin",
+  age: 45,
+  id: "MED-2024-12345",
+  bloodType: "O+",
+  allergies: ["Penicillin", "Peanuts", "Latex"],
+  chronicDiseases: [
+    { name: "Type 2 Diabetes", since: "2020" },
+    { name: "Hypertension", since: "2018" }
+  ],
+  medications: [
+    { name: "Metformin", dosage: "500mg", frequency: "Twice daily" },
+    { name: "Lisinopril", dosage: "10mg", frequency: "Daily" },
+    { name: "Aspirin", dosage: "81mg", frequency: "Daily" }
+  ],
+  image: "/assets/image/Patient_Pic.png"
+};
+
+const INITIAL_HISTORY: MedicalRecord[] = [
+  {
+    id: 1,
+    hospital: 'Kuala Lumpur General Hospital',
+    location: 'Kuala Lumpur',
+    date: 'Dec 1, 2025',
+    doctor: 'Dr. Sarah Ahmad',
+    specialty: 'Endocrinology',
+    tests: [
+      { name: 'HbA1c', result: '6.5%', range: '4.0-5.6%', status: 'elevated' },
+      { name: 'Fasting Glucose', result: '110 mg/dL', range: '70-100 mg/dL', status: 'elevated' },
+      { name: 'Total Cholesterol', result: '185 mg/dL', range: '<200 mg/dL', status: 'normal' },
+      { name: 'HDL Cholesterol', result: '55 mg/dL', range: '>40 mg/dL', status: 'normal' },
+      { name: 'LDL Cholesterol', result: '105 mg/dL', range: '<100 mg/dL', status: 'elevated' },
+    ],
+    diagnosis: 'Type 2 Diabetes - controlled',
+    notes: 'Continue current medication. Schedule follow-up in 3 months.'
+  },
+  {
+    id: 2,
+    hospital: 'Subang Jaya Medical Centre',
+    location: 'Selangor',
+    date: 'Oct 15, 2025',
+    doctor: 'Dr. Michael Tan',
+    specialty: 'Cardiology',
+    tests: [
+      { name: 'Blood Pressure', result: '128/82 mmHg', range: '<120/80 mmHg', status: 'elevated' },
+      { name: 'ECG', result: 'Normal sinus rhythm', range: 'Normal', status: 'normal' },
+      { name: 'Troponin', result: '<0.01 ng/mL', range: '<0.04 ng/mL', status: 'normal' },
+      { name: 'BNP', result: '45 pg/mL', range: '<100 pg/mL', status: 'normal' },
+    ],
+    diagnosis: 'Hypertension - Stage 1',
+    notes: 'Blood pressure slightly elevated. Medication dosage adjusted.'
+  }
+];
+
+export default function App() {
+  const [currentView, setCurrentView] = useState<AppView>(AppView.DASHBOARD);
+  const [patientHistory, setPatientHistory] = useState<MedicalRecord[]>(INITIAL_HISTORY);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [showNFCPopup, setShowNFCPopup] = useState(false);
+  const [showQRScanner, setShowQRScanner] = useState(false);
+  const [qrScanStage, setQrScanStage] = useState<'scanning' | 'detected'>('scanning');
+
+  const handleOCRComplete = (newRecord: MedicalRecord) => {
+    setPatientHistory([newRecord, ...patientHistory]);
+    setCurrentView(AppView.PATIENT_VIEW);
+  };
+
+  const simulateNFCScan = () => {
+    setShowNFCPopup(true);
+    setTimeout(() => {
+      setShowNFCPopup(false);
+      setCurrentView(AppView.PATIENT_VIEW);
+    }, 2000);
+  };
+
+  const simulateQRScan = () => {
+    setShowQRScanner(true);
+    setQrScanStage('scanning');
+    // Simulate QR code detection after 2 seconds
+    setTimeout(() => {
+      setQrScanStage('detected');
+      // Close scanner and navigate after showing success
+      setTimeout(() => {
+        setShowQRScanner(false);
+        setCurrentView(AppView.PATIENT_VIEW);
+        setQrScanStage('scanning'); // Reset for next scan
+      }, 800);
+    }, 2000);
+  };
+
+  return (
+    <div className="flex h-screen bg-gray-100 font-sans text-slate-900">
+
+      {/* Sidebar */}
+      <aside className={`${isSidebarOpen ? 'w-64' : 'w-20'} bg-[#0060c4] text-white transition-all duration-300 flex flex-col shadow-xl z-30`}>
+        <div className="p-6 flex items-center gap-3">
+          <img
+            src="/assets/image/Medidap_logo.png"
+            alt="MedIDap Logo"
+            className="w-8 h-8 rounded-lg object-cover"
+          />
+          {isSidebarOpen && <span className="text-xl font-bold tracking-tight">MedIDap</span>}
+        </div>
+
+        <nav className="flex-1 px-4 py-6 space-y-2">
+          <button
+            onClick={() => setCurrentView(AppView.DASHBOARD)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === AppView.DASHBOARD ? 'bg-white/20 shadow-inner' : 'hover:bg-white/10'}`}
+          >
+            <LayoutDashboard className="w-5 h-5" />
+            {isSidebarOpen && <span>Dashboard</span>}
+          </button>
+
+          <button
+            onClick={() => setCurrentView(AppView.PATIENT_VIEW)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === AppView.PATIENT_VIEW ? 'bg-white/20 shadow-inner' : 'hover:bg-white/10'}`}
+          >
+            <Users className="w-5 h-5" />
+            {isSidebarOpen && <span>Patient Records</span>}
+          </button>
+
+          <button
+            onClick={() => setCurrentView(AppView.OCR_SCAN)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${currentView === AppView.OCR_SCAN ? 'bg-white/20 shadow-inner' : 'hover:bg-white/10'}`}
+          >
+            <ScanLine className="w-5 h-5" />
+            {isSidebarOpen && <span>OCR & AI Import</span>}
+          </button>
+        </nav>
+
+        <div className="p-4">
+          <button className="w-full flex items-center gap-3 px-4 py-3 text-blue-100 hover:text-white hover:bg-white/10 rounded-xl transition-all">
+            <Settings className="w-5 h-5" />
+            {isSidebarOpen && <span>Settings</span>}
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Topbar */}
+        <header className="bg-white border-b border-gray-200 h-16 flex items-center justify-between px-6 shadow-sm z-20">
+          <div className="flex items-center gap-4">
+            <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 hover:bg-gray-100 rounded-lg text-slate-500">
+              <Menu className="w-5 h-5" />
+            </button>
+            <div className="relative hidden md:block">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input type="text" placeholder="Search patients, doctors..." className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#0060c4] focus:outline-none w-64 text-sm transition-all" />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            {/* Quick Actions */}
+            <div className="flex items-center gap-2">
+              <button onClick={simulateNFCScan} className="flex items-center gap-2 px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-full hover:bg-slate-800 transition-colors shadow-sm">
+                <Smartphone className="w-3 h-3" />
+                NFC TAP
+              </button>
+              <button onClick={simulateQRScan} className="flex items-center gap-2 px-3 py-1.5 bg-[#0060c4] text-white text-xs font-bold rounded-full hover:bg-blue-700 transition-colors shadow-sm">
+                <QrCode className="w-3 h-3" />
+                SCAN QR
+              </button>
+            </div>
+
+            <div className="h-6 w-px bg-gray-300 mx-2"></div>
+
+            <button className="relative p-2 text-slate-500 hover:bg-gray-100 rounded-full">
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+            </button>
+            <div className="w-8 h-8 bg-slate-200 rounded-full flex items-center justify-center text-slate-600 font-bold border border-slate-300">
+              DR
+            </div>
+          </div>
+        </header>
+
+        {/* Content Body */}
+        <main className="flex-1 overflow-hidden relative">
+
+          {/* Dashboard View */}
+          {currentView === AppView.DASHBOARD && (
+            <div className="p-8 h-full overflow-y-auto">
+              <div className="max-w-6xl mx-auto">
+                <h1 className="text-2xl font-bold text-slate-900 mb-6">Hospital Dashboard</h1>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                  <div className="bg-gradient-to-br from-[#0060c4] to-blue-600 rounded-2xl p-6 text-white shadow-lg shadow-blue-200">
+                    <h3 className="text-blue-100 text-sm font-medium mb-1">Today's Patients</h3>
+                    <p className="text-4xl font-bold mb-4">124</p>
+                    <div className="text-sm bg-white/20 w-fit px-2 py-1 rounded">+12% from yesterday</div>
+                  </div>
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                    <h3 className="text-slate-500 text-sm font-medium mb-1">Pending Lab Results</h3>
+                    <p className="text-4xl font-bold text-slate-900 mb-4">28</p>
+                    <div className="text-sm text-orange-500 bg-orange-50 w-fit px-2 py-1 rounded">Action required</div>
+                  </div>
+                  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                    <h3 className="text-slate-500 text-sm font-medium mb-1">AI Processed Docs</h3>
+                    <p className="text-4xl font-bold text-slate-900 mb-4">856</p>
+                    <div className="text-sm text-green-600 bg-green-50 w-fit px-2 py-1 rounded">99.8% Accuracy</div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                  <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                    <h2 className="font-bold text-slate-800">Recent Patient Activity</h2>
+                    <button onClick={() => setCurrentView(AppView.PATIENT_VIEW)} className="text-[#0060c4] text-sm hover:underline">View All</button>
+                  </div>
+                  <div className="p-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-gray-100" onClick={() => setCurrentView(AppView.PATIENT_VIEW)}>
+                        <div className="flex items-center gap-4">
+                          <img
+                            src={INITIAL_PATIENT.image}
+                            alt={INITIAL_PATIENT.name}
+                            className="w-10 h-10 rounded-full object-cover border border-slate-200"
+                          />
+                          <div>
+                            <p className="font-bold text-slate-900">Jana Binti Yasin</p>
+                            <p className="text-sm text-slate-500">Check-up • 10 mins ago</p>
+                          </div>
+                        </div>
+                        <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">Admitted</span>
+                      </div>
+                      <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl opacity-60">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-slate-600 font-bold">AS</div>
+                          <div>
+                            <p className="font-bold text-slate-900">Alice Smith</p>
+                            <p className="text-sm text-slate-500">Lab Result • 45 mins ago</p>
+                          </div>
+                        </div>
+                        <span className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-bold">Discharged</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Patient View */}
+          {currentView === AppView.PATIENT_VIEW && (
+            <PatientRecord
+              patient={INITIAL_PATIENT}
+              history={patientHistory}
+              onBack={() => setCurrentView(AppView.DASHBOARD)}
+            />
+          )}
+
+          {/* OCR View */}
+          {currentView === AppView.OCR_SCAN && (
+            <OCRProcessor
+              onProcessingComplete={handleOCRComplete}
+              onCancel={() => setCurrentView(AppView.DASHBOARD)}
+            />
+          )}
+
+          {/* NFC Overlay */}
+          {showNFCPopup && (
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+              <div className="bg-white p-8 rounded-3xl flex flex-col items-center animate-bounce-in shadow-2xl">
+                <div className="w-20 h-20 bg-[#0060c4] rounded-full flex items-center justify-center mb-6 animate-pulse">
+                  <Smartphone className="w-10 h-10 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-2">Reading NFC Tag...</h2>
+                <p className="text-slate-500">Please hold the patient's device near the reader.</p>
+              </div>
+            </div>
+          )}
+
+          {/* QR Scanner Overlay */}
+          {showQRScanner && (
+            <div className="absolute inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center">
+              <div className="flex flex-col items-center">
+                {/* Camera Viewfinder */}
+                <div className="relative w-96 h-96 bg-black rounded-3xl overflow-hidden shadow-2xl border-4 border-[#0060c4]">
+                  {/* QR Code Image */}
+                  <img
+                    src="/assets/image/QR_code.png"
+                    alt="QR Code"
+                    className="w-full h-full object-contain p-8"
+                  />
+
+                  {/* Scanning Line Animation */}
+                  {qrScanStage === 'scanning' && (
+                    <div className="absolute inset-0 overflow-hidden">
+                      <div className="absolute w-full h-1 bg-gradient-to-r from-transparent via-[#0060c4] to-transparent shadow-lg shadow-blue-500 animate-scan" />
+                    </div>
+                  )}
+
+                  {/* Detection Overlay */}
+                  {qrScanStage === 'detected' && (
+                    <div className="absolute inset-0 bg-green-500/20 flex items-center justify-center">
+                      <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center animate-scale-in">
+                        <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Corner Guides */}
+                  <div className="absolute top-4 left-4 w-12 h-12 border-t-4 border-l-4 border-[#0060c4] rounded-tl-lg" />
+                  <div className="absolute top-4 right-4 w-12 h-12 border-t-4 border-r-4 border-[#0060c4] rounded-tr-lg" />
+                  <div className="absolute bottom-4 left-4 w-12 h-12 border-b-4 border-l-4 border-[#0060c4] rounded-bl-lg" />
+                  <div className="absolute bottom-4 right-4 w-12 h-12 border-b-4 border-r-4 border-[#0060c4] rounded-br-lg" />
+                </div>
+
+                {/* Status Text */}
+                <div className="mt-8 text-center">
+                  {qrScanStage === 'scanning' ? (
+                    <>
+                      <h2 className="text-2xl font-bold text-white mb-2">Scanning QR Code...</h2>
+                      <p className="text-gray-300">Hold steady while we read the patient data</p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-2xl font-bold text-green-400 mb-2">QR Code Detected!</h2>
+                      <p className="text-gray-300">Loading patient records...</p>
+                    </>
+                  )}
+                </div>
+
+                {/* Cancel Button */}
+                <button
+                  onClick={() => setShowQRScanner(false)}
+                  className="mt-6 px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-full transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+        </main>
+      </div>
+    </div>
+  );
+}
