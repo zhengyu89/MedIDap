@@ -3,32 +3,49 @@
 > **"One Patient, One Identity: Bridging Paper Healthcare to Digital Future"**
 
 **Team Name:** BlackSheep
-![Hospital Dashboard](/assets/MediDap_Image.png)
----
 
-## I. Project Overview
-MedIDap is a unified, portable medical identity ecosystem designed to bridge the gap between physical paper records and a digital future. It ensures that patient data is accessible, secure, and portable, empowering both patients and healthcare providers.
+![Hospital Dashboard](assets/MediDap_Image.png)
 
 ---
 
-## II. Problem Landscape & Statistics
+## 📖 Table of Contents
+1. [Project Overview](#-i-project-overview)
+2. [Problem Landscape & Statistics](#-ii-problem-landscape--statistics)
+3. [Problem Statement](#-iii-problem-statement-high-risk-low-digital-access)
+4. [The Solution: MedIDap](#-iv-the-solution-medidap)
+5. [Value Proposition](#-v-value-proposition-why-medidap)
+6. [Technical Architecture](#-vi-technical-architecture)
+7. [Technology Stack](#-vii-technology-stack)
+8. [Impact & Measurable Outcomes](#-viii-impact--measurable-outcomes)
+9. [The Team](#-ix-the-team)
+10. [Getting Started (Development)](#-x-getting-started-development)
 
-### Current Healthcare Infrastructure Status (Malaysia Context)
+---
 
-**Public Sector:**
+## 🚀 I. Project Overview
+
+**MedIDap** is a unified, portable medical identity ecosystem designed to bridge the gap between physical paper records and a digital future. It ensures that patient data is accessible, secure, and portable, empowering both patients and healthcare providers with a seamless "One Patient, One Identity" system.
+
+---
+
+## 📊 II. Problem Landscape & Statistics
+
+### 🇲🇾 Current Healthcare Infrastructure Status (Malaysia Context)
+
+#### Public Sector 🏥
 *   **99.9%** of public clinics are paper-based.
 *   **85.3%** of public hospitals are paper-based.
 *   Only **14.7%** of public hospitals have adopted Electronic Medical Records (EMR).
 
-**Private Sector:**
+#### Private Sector 🏨
 *   **75.2%** of private hospitals use vendor-specific EMR systems.
 *   **24.8%** of private hospitals remain paper-based.
 
-*(Source: MOH Town Hall Putrajaya, 13 Jan 2025)*
+> *(Source: MOH Town Hall Putrajaya, 13 Jan 2025)*
 
 ### Patient Health Trends
-There is a rising prevalence of Non-Communicable Diseases (NCDs) correlated with age, increasing steadily from the 18-29 age group up to the 60+ age group.
-*(Source: National Health & Morbidity Survey 2023)*
+There is a rising prevalence of **Non-Communicable Diseases (NCDs)** correlated with age, increasing steadily from the 18-29 age group up to the 60+ age group.
+> *(Source: National Health & Morbidity Survey 2023)*
 
 ### Core Issues Identified
 *   **The Digital Divide:** Patient risk is currently unmanaged by existing infrastructure.
@@ -37,52 +54,56 @@ There is a rising prevalence of Non-Communicable Diseases (NCDs) correlated with
 
 ---
 
-## III. Problem Statement: High Risk, Low Digital Access
+## 🔴 III. Problem Statement: High Risk, Low Digital Access
 
 *   **Inefficient Processes:** Medical staff spend excessive time searching through scattered paper records.
-
 *   **Patient Burden & Data Inaccuracy:**
     *   Patients are forced to repeat complex health histories at every visit.
     *   Relying on patient memory and paper leads to missing or inaccurate records.
-
 *   **Medication Errors:** Doctors often lack knowledge of a patient's actual allergies or current medications, which can cause errors and put lives at risk.
 
 ---
 
-## IV. The Solution: MedIDap
+## 🟢 IV. The Solution: MedIDap
 
-### Product Concept
+### 📱 Product Concept
 **Description:** An all-in-one portable health record where health information is available at the user's fingertips.
 
-### Physical Interface
+### 💳 Physical Interface
 *   **NFC Smart Card:** A "Universal Health MedIDap" card containing Name, ID, and Blood Type.
 *   **Dynamic QR:** Users can scan a QR code to view medical information or regenerate the QR for security.
 
-### Key Features
-*   **AI Vision & OCR:** Scans physical prescriptions using Optical Character Recognition (OCR).
-*   **Universal Access:** User and family views are available anywhere.
-*   **Medical History Import:** Immediately views chronic conditions, allergies, and past labs.
-*   **Data Processing:** Extracts medical data, imports it, and converts it to standardized FHIR JSON format to update the User ID.
-*   **Guardian Control:**
+### ✨ Key Features
+1.  **AI Vision & OCR:** Scans physical prescriptions using Optical Character Recognition (OCR).
+2.  **Universal Access:** User and family views are available anywhere.
+3.  **Medical History Import:** Immediately views chronic conditions, allergies, and past labs.
+4.  **Data Processing:** Extracts medical data, imports it, and converts it to standardized **FHIR JSON** format to update the User ID.
+5.  **Guardian Control:**
     *   Allows management of support for dependents (e.g., OKU support).
     *   Enables guardian access for emergency support.
     *   Lists active guardians with contact details and relationship (e.g., Daughter, Son).
 
 ---
 
-## V. Value Proposition: Why MedIDap?
+## 💎 V. Value Proposition: Why MedIDap?
 
-*   **Increased Organizational Efficiency:** Provides instant access to complete digital patient profiles, eliminating paper file searches, speeding up workflows, and reducing errors.
-*   **Convenience for Every Patient:** One ID carries all medical history (reports/documents) and follows the patient anywhere, including rural areas or overseas.
-*   **Inclusive & Error-Free Reporting:** Addresses the issue of patients (especially the elderly) forgetting history; ensures accurate data to prevent medication errors.
-*   **Improved Guidance & Long-Term Care:** Connects patients with family/guardians to ensure better support for chronic care and follow-ups.
+| Feature | Service Value |
+| :--- | :--- |
+| **Organizational Efficiency** | Provides instant access to complete digital patient profiles, eliminating paper file searches, speeding up workflows, and reducing errors. |
+| **Convenience** | One ID carries all medical history (reports/documents) and follows the patient anywhere, including rural areas or overseas. |
+| **Error-Free Reporting** | Addresses the issue of patients (especially the elderly) forgetting history; ensures accurate data to prevent medication errors. |
+| **Guidance & Long-Term Care** | Connects patients with family/guardians to ensure better support for chronic care and follow-ups. |
 
 ---
 
-## VI. Technical Architecture
+## 🏗️ VI. Technical Architecture
 
 ### Architecture Diagram
-![Architecture Diagram](/assets/Architecture_Diagram.png)
+<div align="center">
+  <img src="assets/Architecture_Diagram.png" alt="Architecture Diagram" width="100%" />
+</div>
+
+<br>
 
 ### Workflow
 
@@ -98,7 +119,7 @@ There is a rising prevalence of Non-Communicable Diseases (NCDs) correlated with
 
 ---
 
-## VII. Technology Stack
+## 🛠️ VII. Technology Stack
 
 | Component | Tech |
 | :--- | :--- |
@@ -108,17 +129,19 @@ There is a rising prevalence of Non-Communicable Diseases (NCDs) correlated with
 | **AI Model** | Google Gemini 2.5 Flash (Vision & NLP) |
 | **Data Standard** | HL7 FHIR R4 (JSON) |
 
-## VIII. Impact & Measurable Outcomes
+---
 
-*   **Safety:** Prevents medication conflicts to guarantee patient safety.
-*   **Efficiency:** Eliminates duplicate tests, leading to smarter resource use.
-*   **Administration:** Reduces administrative burden by up to **80%**, speeding up clinic operations.
-*   **Inclusion:** Brings healthcare access to rural and low-connectivity zones.
-*   **Patient Experience:** Empowers the elderly with a "zero-paper" healthcare journey.
+## 🌟 VIII. Impact & Measurable Outcomes
+
+*   ✅ **Safety:** Prevents medication conflicts to guarantee patient safety.
+*   ✅ **Efficiency:** Eliminates duplicate tests, leading to smarter resource use.
+*   ✅ **Administration:** Reduces administrative burden by up to **80%**, speeding up clinic operations.
+*   ✅ **Inclusion:** Brings healthcare access to rural and low-connectivity zones.
+*   ✅ **Patient Experience:** Empowers the elderly with a "zero-paper" healthcare journey.
 
 ---
 
-## IX. The Team
+## 👥 IX. The Team
 
 <div align="center">
 
@@ -131,7 +154,7 @@ There is a rising prevalence of Non-Communicable Diseases (NCDs) correlated with
 
 ---
 
-## X. Getting Started (Development)
+## ⚡ X. Getting Started (Development)
 
 To run the entire ecosystem locally:
 
@@ -154,4 +177,4 @@ npm install
 npm run dev
 ```
 
-**Mobile View Note**: For the best experience with the User Interface, open your browser's Developer Tools (`F12`), toggle the Device Toolbar (`Ctrl+Shift+M`), and select **iPhone 14 Pro Max**.
+> **Mobile View Note**: For the best experience with the User Interface, open your browser's Developer Tools (`F12`), toggle the Device Toolbar (`Ctrl+Shift+M`), and select **iPhone 14 Pro Max**.
