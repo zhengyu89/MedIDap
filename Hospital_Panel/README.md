@@ -1,10 +1,7 @@
 # MedIDap Hospital Portal
 
-<div align="center">
-  <img src="https://t3.ftcdn.net/jpg/04/13/23/97/360_F_413239755_lFhC8z5M9e6qG2q3y9y2y2y2y2y2y2y2.jpg" alt="MedIDap Logo" width="100" style="border-radius: 10px; margin-bottom: 20px;">
-  <br>
-  <strong>Next-Generation Hospital Interface for Seamless Data Integration</strong>
-</div>
+
+![Hospital Dashboard](public/assets/image/Hospital_Dashboard.png)
 
 <br>
 
@@ -17,8 +14,6 @@ The core power of MedIDap lies in its integration with **Google Gemini AI**. By 
 Demo: https://medidap.netlify.app/
 
 ## Key Features
-
-![Hospital Dashboard](public/assets/image/Hospital_Dashboard.png)
 
 ### 1. 🏥 Interactive Dashboard
 *   **Real-time Analytics:** View daily patient counts, pending lab results, and AI processing stats.
