@@ -145,9 +145,9 @@ There is a rising prevalence of **Non-Communicable Diseases (NCDs)** correlated 
 
 <div align="center">
 
-| ![Yap Jia Xin](https://github.com/Jiaxin061.png?size=100) | ![Chang Wei Lam](https://github.com/Weilamm.png?size=100) | ![Tan Zheng Yu](https://github.com/zhengyu89.png?size=100) | ![Karen Voon Xiu Wen](https://github.com/Karen040409.png?size=100) | ![Tan Qing Qing](https://github.com/qingqing44.png?size=100) |
+| ![Chang Wei Lam](https://github.com/Weilamm.png?size=100) | ![Yap Jia Xin](https://github.com/Jiaxin061.png?size=100) | ![Tan Zheng Yu](https://github.com/zhengyu89.png?size=100) | ![Karen Voon Xiu Wen](https://github.com/Karen040409.png?size=100) | ![Tan Qing Qing](https://github.com/qingqing44.png?size=100) |
 | :---: | :---: | :---: | :---: | :---: |
-| **Yap Jia Xin** | **Chang Wei Lam** | **Tan Zheng Yu** | **Karen Voon Xiu Wen** | **Tan Qing Qing** |
+| **Chang Wei Lam** | **Yap Jia Xin** | **Tan Zheng Yu** | **Karen Voon Xiu Wen** | **Tan Qing Qing** |
 | Project Leader | UI/UX Designer | Software Developer | Data & AI Specialist | Test Architect |
 
 </div>
