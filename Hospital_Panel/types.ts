@@ -15,6 +15,8 @@ export interface MedicalRecord {
   tests: TestResult[];
   diagnosis: string;
   notes: string;
+  followUpDate?: string; // Optional follow-up appointment date
+  attachment?: string; // Optional PDF report filename (e.g., MRI results)
   fhirJson?: string; // Stringified JSON for display
 }
 

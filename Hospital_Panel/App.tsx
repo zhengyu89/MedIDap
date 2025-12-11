@@ -39,7 +39,9 @@ const INITIAL_HISTORY: MedicalRecord[] = [
       { name: 'LDL Cholesterol', result: '105 mg/dL', range: '<100 mg/dL', status: 'elevated' },
     ],
     diagnosis: 'Type 2 Diabetes - controlled',
-    notes: 'Continue current medication. Schedule follow-up in 3 months.'
+    notes: 'Continue current medication. Schedule follow-up in 3 months.',
+    followUpDate: 'Mar 1, 2026',
+    attachment: 'MRI_Scan_Report.pdf'
   },
   {
     id: 2,

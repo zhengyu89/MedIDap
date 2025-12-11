@@ -86,6 +86,8 @@ export const OCRProcessor: React.FC<OCRProcessorProps> = ({ onProcessingComplete
         range: 'N/A', // Range is hard to extract reliably without specific structure
         status: 'normal' // Defaulting for demo
       })),
+      followUpDate: undefined, // Follow-up dates not extracted from documents
+      attachment: undefined, // Attachments not extracted from documents
       fhirJson: JSON.stringify(result, null, 2)
     };
 

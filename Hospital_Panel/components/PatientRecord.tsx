@@ -195,8 +195,8 @@ export const PatientRecord: React.FC<PatientRecordProps> = ({ patient, history, 
                                     <button
                                         onClick={() => setShowFilters(!showFilters)}
                                         className={`flex items-center gap-2 px-3 py-2 rounded-lg border transition-colors text-sm ${showFilters || activeFiltersCount > 0
-                                                ? 'bg-[#0060c4] text-white border-[#0060c4]'
-                                                : 'bg-white text-slate-700 border-gray-300 hover:bg-gray-50'
+                                            ? 'bg-[#0060c4] text-white border-[#0060c4]'
+                                            : 'bg-white text-slate-700 border-gray-300 hover:bg-gray-50'
                                             }`}
                                     >
                                         <Filter className="w-4 h-4" />
@@ -269,8 +269,8 @@ export const PatientRecord: React.FC<PatientRecordProps> = ({ patient, history, 
                                             >
                                                 <div className="flex items-center gap-4">
                                                     <div className={`p-3 rounded-xl ${record.diagnosis.includes('Good') || record.diagnosis.includes('Normal')
-                                                            ? 'bg-green-50 text-green-600'
-                                                            : 'bg-[#0060c4]/10 text-[#0060c4]'
+                                                        ? 'bg-green-50 text-green-600'
+                                                        : 'bg-[#0060c4]/10 text-[#0060c4]'
                                                         }`}>
                                                         <Building2 className="w-5 h-5" />
                                                     </div>
@@ -301,12 +301,30 @@ export const PatientRecord: React.FC<PatientRecordProps> = ({ patient, history, 
                                                                 <span className="text-slate-500 text-xs block mb-1">Diagnosis</span>
                                                                 <p className="text-slate-900 font-medium">{record.diagnosis}</p>
                                                             </div>
-                                                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                                                            <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-4">
                                                                 <div className="flex gap-2">
                                                                     <FileText className="w-4 h-4 text-blue-600 mt-0.5" />
                                                                     <div>
                                                                         <span className="text-blue-600 text-xs font-bold uppercase block mb-1">Physician Notes</span>
                                                                         <p className="text-blue-800 text-sm">{record.notes}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="bg-green-50 p-4 rounded-lg border border-green-100 mb-4">
+                                                                <div className="flex gap-2">
+                                                                    <Calendar className="w-4 h-4 text-green-600 mt-0.5" />
+                                                                    <div>
+                                                                        <span className="text-green-600 text-xs font-bold uppercase block mb-1">Next Follow-up</span>
+                                                                        <p className="text-green-800 text-sm">{record.followUpDate || 'None scheduled'}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-100">
+                                                                <div className="flex gap-2">
+                                                                    <FileText className="w-4 h-4 text-yellow-600 mt-0.5" />
+                                                                    <div>
+                                                                        <span className="text-yellow-600 text-xs font-bold uppercase block mb-1">Attachment</span>
+                                                                        <p className="text-yellow-800 text-sm">{record.attachment || 'No attachments'}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -324,10 +342,10 @@ export const PatientRecord: React.FC<PatientRecordProps> = ({ patient, history, 
                                                                         <div className="text-right">
                                                                             <span className="block font-bold text-slate-800">{test.result}</span>
                                                                             <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full ${test.status === 'normal'
-                                                                                    ? 'bg-green-100 text-green-700'
-                                                                                    : test.status === 'elevated'
-                                                                                        ? 'bg-orange-100 text-orange-700'
-                                                                                        : 'bg-red-100 text-red-700'
+                                                                                ? 'bg-green-100 text-green-700'
+                                                                                : test.status === 'elevated'
+                                                                                    ? 'bg-orange-100 text-orange-700'
+                                                                                    : 'bg-red-100 text-red-700'
                                                                                 }`}>
                                                                                 {test.status}
                                                                             </span>

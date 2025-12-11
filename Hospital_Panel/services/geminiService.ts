@@ -17,7 +17,7 @@ const getAiClient = () => {
 
 export const analyzeMedicalDocument = async (base64Image: string): Promise<string> => {
   try {
-    const model = "gemini-2.5-flash";
+    const model = "gemini-2.5-flash-lite";
 
     const prompt = `
       Analyze the provided medical document image. 
@@ -65,7 +65,7 @@ export const analyzeMedicalDocument = async (base64Image: string): Promise<strin
 
 export const analyzeMedicalText = async (medicalText: string): Promise<string> => {
   try {
-    const model = "gemini-2.5-flash";
+    const model = "gemini-2.5-flash-lite";
 
     const prompt = `
       Analyze the provided medical text notes. 

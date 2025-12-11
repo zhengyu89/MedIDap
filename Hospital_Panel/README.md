@@ -14,7 +14,11 @@
 
 The core power of MedIDap lies in its integration with **Google Gemini AI**. By leveraging multimodal AI, the portal allows hospital staff to convert unstructured data—whether from physical paper scans or quick handwritten notes—into standardized **HL7 FHIR R4** (Fast Healthcare Interoperability Resources) JSON data, ready for integration into the hospital's database.
 
+Demo: https://medidap.netlify.app/
+
 ## Key Features
+
+![Hospital Dashboard](public/assets/image/Hospital_Dashboard.png)
 
 ### 1. 🏥 Interactive Dashboard
 *   **Real-time Analytics:** View daily patient counts, pending lab results, and AI processing stats.
@@ -53,13 +57,13 @@ MedIDap uses **Gemini 2.5 Flash** to bridge the gap between physical and digital
 *   **Frontend:** React 19, TypeScript
 *   **Styling:** Tailwind CSS
 *   **Icons:** Lucide React
-*   **AI & Logic:** Google GenAI SDK (`gemini-2.5-flash`)
+*   **AI & Logic:** Google GenAI SDK (`gemini-2.5-flash-lite`)
 
 ## Setup & Configuration
 
 1.  **Environment Variables:**
     The application requires a Google Gemini API Key to function.
-    Ensure `process.env.API_KEY` is available in your build environment.
+    Ensure `VITE_GEMINI_API_KEY` is set in your `.env` file (Vite automatically prefixes with `VITE_`).
 
 2.  **Installation:**
     ```bash
